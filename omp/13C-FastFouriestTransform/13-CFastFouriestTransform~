@@ -1,0 +1,60 @@
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+/*
+	Dado un numero, hallar en que base, ese numero tiene el numero maximo de cuatros (la menor).
+	
+	
+*/
+
+#define N 4 //Buscamos 'cuatros'
+
+//Devuelve el numero de cuatros que tiene x en base b
+long four (long x, long b) {
+	long total = 0;
+	while(x > 0) {
+		if (x%b == N)
+			total++;
+		x /= b;
+	}
+	return total;
+}
+
+//Devuelve las cifras que tiene el numero x en la base b.
+//Calcula el logaritmo en base b de x, que es equivalente al cociente entre:
+//log base (a) de x / log base (a) de b, para cualquier a
+long cifras(long x, long b) {
+	return ceil(log(x)/log(b));
+}
+
+void solve() {
+	long x;
+	cin >> x;
+	long maxN = 0;		//Numero de cuatros
+	long actualN = 0;
+	long maxB = 0;		//Base
+	long actualB = N+1;
+	
+	while (maxN < cifras(x, actualB)) {
+		actual = four(x, actualB);
+		if (actualN > maxN) {
+			maxN = actualN;
+			maxB = actualB;
+		}
+		b++;
+	}
+	
+	if (maxB == 0)	//No hemos hallado ninguna base con cuatros
+		cout << x << " is infuriable\n";
+	else
+		cout << x << ' ' << maxN << ' ' << maxB << '\n';
+}
+
+int main() {
+	int ncasos;
+	for (cin >> ncasos; ncasos > 0; --ncasos) {
+		solve();
+	}
+
+}

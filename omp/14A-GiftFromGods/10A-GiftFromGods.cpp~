@@ -1,0 +1,68 @@
+#include <iostream>
+#include <math.h> //sqrt
+#include <string> //palindromo
+using namespace std;
+
+bool esPrimo(int n) {
+	if ((n<4) || (n==5) || (n==7)) return true;
+	if (n%2 == 0) return false;
+	int raiz = (int) sqrt(n);
+	//Recorremos los posibles divisores (solo impares)
+	for (int i = 3; i <= raiz; ++++i)
+		if (n%i == 0)	return false;
+
+	return true;
+}
+
+bool esPalindromo(string s) {
+	int i = 0;
+	int j = s.length()-1;
+	while ((s[i] == s[j]) && (i < j)) {
+		i++;
+		j--;
+	}
+	return (i >= j);
+}
+
+string invertir(string s) {
+	string r;
+	for (int i = s.length()-1; i >= 0; --i)
+		r += s[i];
+	return r;
+}
+
+//Devuelve la cadena asociada al entero n
+string integerToString(int n) {
+	if (n == 0) return "0";
+	string s;
+	while (n > 0) {
+		s.push_back(n%10+'0');
+		n/=10;
+	}
+	//No es necesario en nuestro caso
+	//s = invertir(s);
+	return s;
+}
+
+bool esCapicua(int n) {
+	//Todo capicua de cifras pares es divisible por 11
+	if (n < 10) return true;
+	string s = integerToString(n);
+	return esPalindromo(s);
+}
+
+//Resuelve un problema individual, muestra el resultado
+//Termina cuando el numero es capicua y primo
+bool solve() {
+	int n;
+	cin >> n;
+	cout << 2*n << '\n';
+	return (!esPrimo(n) || !esCapicua(n));
+}
+
+
+int main() {
+	int n;
+	while(solve()) ;
+}
+

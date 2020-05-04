@@ -1,0 +1,20 @@
+Fire laser at 40 degrees.
+Fire laser at 50 degrees.
+Fire laser at 80 degrees.
+3 burst balloons.
+Fire laser at 0 degrees.
+Fire laser at 20 degrees.
+Fire laser at 40 degrees.
+Fire laser at 50 degrees.
+Fire laser at 60 degrees.
+6 burst balloons.
+Fire laser at 0 degrees.
+Fire laser at 30 degrees.
+Fire laser at 70 degrees.
+5 burst balloons.
+Fire laser at 50 degrees.
+Fire laser at 60 degrees.
+3 burst balloons.
+Fire laser at 0 degrees.
+Fire laser at 70 degrees.
+4 burst balloons.

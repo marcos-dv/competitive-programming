@@ -1,0 +1,72 @@
+#include <iostream>
+#include <limits>	//"infinito" enteros
+using namespace std;
+
+int ** creaMatriz(int n, int m) {
+	int ** M = new int * [n];
+	for (int i = 0; i < n; ++i)
+		M[i] = new int [m];
+	return M;
+}
+
+void leerMatriz(int ** M, int n, int m) {
+	for(int i = 0; i < n; ++i)
+		for (int j = 0; j < m; ++j)
+			cin >> M[i][j];
+}
+
+void printMatriz(int ** M, int n, int m) {
+	for(int i = 0; i < n; ++i) {
+		for (int j = 0; j < m; ++j)
+			cout << M[i][j] << ' ';
+		cout << '\n';
+	}
+}
+
+void deleteMatriz(int ** M, int n) {
+	for (int i = 0; i < n; ++i)
+		delete M[i];
+	delete M;
+}
+
+//Resuelve un problema individual
+void solve(int t, int r, int h) {	
+	int ** T = creaMatriz(t, r+1);
+	int ** R = creaMatriz(r, h+1);
+	int ** H = creaMatriz(h, t+1);
+	leerMatriz(T, t, r+1);
+	leerMatriz(R, r, h+1);
+	leerMatriz(H, h, t+1);
+	
+	int a, b, c;
+	a = b = c = -1;
+	int minCoste = numeric_limits<int>::max();
+	
+	//Buscamos el candidato, entre todos los posibles
+	for (int i = 0; i < t; ++i)	
+		for (int j = 0; j < r; ++j)
+			for (int k = 0; k < h; ++k) 
+				if ((T[i][j+1]+R[j][k+1]+H[k][i+1] == 0)	//Entonces son compatibles (0 = compatible)
+				&& (T[i][0]+R[j][0]+H[k][0] < minCoste)) {
+					a = i;
+					b = j;
+					c = k;
+					minCoste = T[i][0]+R[j][0]+H[k][0];
+				}
+	if (a != -1)	//No hemos encontrado candidato
+		cout << a << ' ' << b << ' ' << c << ':' << minCoste << '\n';
+	else
+		cout << "Don't get married!\n";
+
+	deleteMatriz(T, t);
+	deleteMatriz(R, r);
+	deleteMatriz(H, h);
+}
+
+
+int main() {
+	int t, r, h;
+	while(cin >> t >> r >> h) {
+		solve(t, r, h);
+	}
+}

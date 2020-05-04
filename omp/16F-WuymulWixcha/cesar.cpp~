@@ -1,0 +1,42 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+
+string cesar(string s, int n) {
+	n = n%26;	//Hay 26 caracteres Ascii
+	string cesar = s;
+	for (int i = 0; i < s.length(); ++i) {
+		if ((s[i] >= 'a') && (s[i] <= 'z')) {		//Solo las letras
+			int numAscii = (int)(s[i] + n);		//Debido a la representacion sesgada de los caracteres
+								//Necesitamos esta variable auxiliar
+			if (numAscii < (int)'a')
+				numAscii += 26;
+			if (numAscii > (int)'z')
+				numAscii -= 26;
+			cesar[i] = numAscii;
+		}
+		else if ((s[i] >= 'A') && (s[i] <= 'Z')) {		//Solo las letras
+			int numAscii = (int)(s[i] + n);		//Debido a la representacion sesgada de los caracteres
+								//Necesitamos esta variable auxiliar
+			if (numAscii < (int)'A')
+				numAscii += 26;
+			if (numAscii > (int)'Z')
+				numAscii -= 26;
+			cesar[i] = numAscii;
+		}
+	}
+	return cesar;
+}
+
+int main () {
+	int desfase = 6;
+	while(true) {
+		//cin >> desfase;
+		if (desfase == 0)
+			break;
+		string s;
+		getline(cin, s);
+		cout << cesar(s, desfase) << '\n';
+	}
+}

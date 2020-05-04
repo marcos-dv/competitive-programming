@@ -1,0 +1,17 @@
+#include<iostream>
+
+using namespace std;
+
+int main() {
+	int ncasos;
+	int n;
+	int m;
+	for(cin >> ncasos; ncasos > 0; ncasos--) {
+		cin >> n >> m;
+		if (n <= m) {
+			cout << "ROMANCE\n";
+		}
+		else
+			cout << "PRINCIPIO\n";
+	}
+}

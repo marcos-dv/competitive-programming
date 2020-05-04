@@ -1,0 +1,86 @@
+#include <iostream>
+#include <math.h> //pi M_PI y tangente tan
+using namespace std;
+
+//10 angulos, de 0 a 90 (de 10 en 10)
+const int ANGULOS = 10;
+const int SALTO = 10;
+
+struct Circulo {
+	double x, y, r;
+};
+
+Circulo * leerCirculos(int n) {
+	Circulo * c = new Circulo[n];
+	int x, y, d;
+	for (int i = 0; i < n; ++i) {
+		cin >> x >> y >> d;
+		c[i].x = x;
+		c[i].y = y;
+		c[i].r = d/2;
+	}
+	return c;
+}
+
+/* Devuelve si la recta centrada en el origen de pendiente m interseca con el circulo c
+Calculamos la interseccion de la circunferencia (x-a)^2+(y-b)^2 = r^2 y la recta y = mx
+Obtenemos una ecuacion de segundo grado (en x), que tendra solucion si y solo si el discriminante
+es no negativo (si es 0, tangente, si es positivo, secante), es decir, devolvemos
+que el discriminante es no negativo
+*/
+bool interseccion (double m, Circulo c){
+	return ((2*c.x*c.y*m-c.y*c.y+c.r*c.r+m*m*(c.r*c.r-c.x*c.x)) >= 0);
+}
+
+double * angulos(){
+	double * angulos = new double[ANGULOS];
+	for (int i = 0; i < ANGULOS; ++i) {
+		//Tangente del angulo en radianes
+		angulos[i] = tan((double)M_PI*i*SALTO/180);
+	}
+	return angulos;
+}
+
+void solve() {
+	int n = 0;
+	cin >> n;
+	Circulo * circulos = leerCirculos(n);
+	double * pendiente = angulos();
+	bool tocados[n];
+	for (int j = 0; j < n; ++j)
+		tocados[j] = false;
+	int rotos = 0;
+	//Angulo i, globo j
+	for (int i = 0; (i < ANGULOS) && (rotos < n); ++i) {
+		//el disparo es valido, rompe algun globo
+		bool valido = false;
+		//Comprobar los globos
+		for(int j = 0; j < n; ++j) {
+			if (!tocados[j] && interseccion(pendiente[i], circulos[j])) {
+					rotos++;
+					valido = true;	
+					tocados[j] = true;		
+			}
+		}	//Disparo efectuado
+		if (valido)
+			cout << "Fire laser at " << i*SALTO << " degrees." << '\n';
+	}
+	//Solucion
+	if (rotos == 0)
+		cout << "No balloon burst.";
+	else if (rotos == 1)
+		cout << "1 burst balloon.";
+	else
+		cout << rotos << " burst balloons.";
+	delete circulos;
+	delete pendiente;
+}
+
+
+int main() {
+	int ncasos;
+	for(cin >> ncasos; ncasos > 0; ncasos--) {
+		solve();
+		cout << '\n';
+	}
+}
